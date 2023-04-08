@@ -11,7 +11,7 @@ import argparse
 rss_music = 'https://rss.app/feeds/jAOa1YTPKxhIhlZz.xml'
 feed_music = feedparser.parse(rss_music)
 first_music = feed_music.entries[0].link
-def print_news(first_music):
+def print_music(first_music):
     return first_music
 
 #Fetch Media Releases from the Minister for Mental Health
@@ -19,7 +19,7 @@ def print_news(first_music):
 rss_health = 'https://www.health.nsw.gov.au/_layouts/15/feed.aspx?xsl=1&web=/news&page=d6828794-f20b-4d11-839e-9edd75d483ff&wp=cf6e281c-d6f6-4c22-b78f-e6890eccd5fb&pageurl=/news/Pages/rss-minister-for-mental-health.aspx'
 feed_health = feedparser.parse(rss_health)
 first_health = feed_health.entries[0].link
-def print_news(first_health):
+def print_health(first_health):
     return first_health
 
 
@@ -30,13 +30,51 @@ first_news = feed.entries[0].link
 def print_news(first_news):
     return first_news
 
-# Send a bot message
-def send_slack_message(payload, webhook):
-    return requests.post(webhook, json.dumps(payload))
+#argpars music, health
 
-webhook = "https://hooks.slack.com/services/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"
-payload = {"text": f"Here is the NewsLink for today! Enjoy it! {first_news}"}
-send_slack_message(payload, webhook)
+parser = argparse.ArgumentParser(
+                    prog='adds music and health arguments to cli',
+                    description='defines health and music arguments',
+                    epilog='Text at the bottom of help')
+
+parser.add_argument('-m', '--music', action='store_true')
+parser.add_argument('-H', '--health', action='store_true')
+
+args = parser.parse_args()
+if args.music:
+    print(f"{first_music}")
+
+if args.health:
+    print(f"{first_health}")
+
+
+# Send bot messages
+
+
+
+def send_slack_message(payload, webhook, first_type):
+    return requests.post(webhook, json.dumps(payload), first_type)
+
+first_type = {first_news, first_health, first_music}
+
+if first_news:
+    webhook_news = "https://hooks.slack.com/services/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"
+    payload_news = {"text": f"Here is the NewsLink for today! Enjoy it! {first_news}"}
+    send_slack_message(payload_news, webhook_news, first_news)
+
+elif first_health:
+    webhook_health = "https://hooks.slack.com/services/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"
+    payload_health = {"text": f"Health news are here! {first_health}"}
+    send_slack_message(payload_health, webhook_health, first_health)
+
+elif first_music:
+    webhook_music = "https://hooks.slack.com/services/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"
+    payload_music = {"text": f"Have some fun! {first_music}"}
+    send_slack_message(payload_music, webhook_music, first_music)
+
+
+
+
 
 
 
