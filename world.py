@@ -48,29 +48,29 @@ if args.health:
     print(f"{first_health}")
 
 
-# Send bot messages
-
-
+# Send bot messages from CLI
 
 def send_slack_message(payload, webhook, first_type):
     return requests.post(webhook, json.dumps(payload), first_type)
 
-first_type = {first_news, first_health, first_music}
+first_type = [first_news, first_health, first_music]
+
 
 if first_news:
-    webhook_news = "https://hooks.slack.com/services/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"
+    webhook = "https://hooks.slack.com/services/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"
     payload_news = {"text": f"Here is the NewsLink for today! Enjoy it! {first_news}"}
-    send_slack_message(payload_news, webhook_news, first_news)
+    send_slack_message(payload_news, webhook, first_news)
 
-elif first_health:
-    webhook_health = "https://hooks.slack.com/services/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"
-    payload_health = {"text": f"Health news are here! {first_health}"}
-    send_slack_message(payload_health, webhook_health, first_health)
+if first_health:
+    webhook = "https://hooks.slack.com/services/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"
+    payload = {"text": f"Health news are here! {first_health}"}
+    send_slack_message(payload, webhook, first_health)
 
-elif first_music:
-    webhook_music = "https://hooks.slack.com/services/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"
-    payload_music = {"text": f"Have some fun! {first_music}"}
-    send_slack_message(payload_music, webhook_music, first_music)
+if first_music:
+    webhook = "https://hooks.slack.com/services/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"
+    payload = {"text": f"Have some fun! {first_music}"}
+    send_slack_message(payload, webhook, first_music)
+
 
 
 
