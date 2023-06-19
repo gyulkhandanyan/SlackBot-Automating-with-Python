@@ -39,19 +39,19 @@ def send_slack_message(payload, webhook):
 
 if is_music:
     link_music = get_first_entry('https://rss.app/feeds/jAOa1YTPKxhIhlZz.xml')
-    webhook = "https://hooks.slack.com/services/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"
+    webhook = "https://hooks.slack.com/services/your_slackworkplace_ID"
     payload = {"text": f"Have some fun! {link_music}"}
     send_slack_message(payload, webhook)
 
 if is_health:
     link_health = get_first_entry('https://www.health.nsw.gov.au/_layouts/15/feed.aspx?xsl=1&web=/news&page=d6828794-f20b-4d11-839e-9edd75d483ff&wp=cf6e281c-d6f6-4c22-b78f-e6890eccd5fb&pageurl=/news/Pages/rss-minister-for-mental-health.aspx')
-    webhook = "https://hooks.slack.com/services/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"
+    webhook = "https://hooks.slack.com/services/your_slackworkplace_ID"
     payload = {"text": f"Health news are here! {link_health}"}
     send_slack_message(payload, webhook)
 
 if is_news:
     link_news = get_first_entry('https://rss.app/feeds/jAOa1YTPKxhIhlZz.xml')
-    webhook = "https://hooks.slack.com/services/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"
+    webhook = "https://hooks.slack.com/services/your_slackworkplace_ID"
     payload = {"text": f"Morning! IT News for today! {link_news}"}
     send_slack_message(payload, webhook)
 
